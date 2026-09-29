@@ -1,14 +1,11 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import {
-  vmDashboardPath,
-  vmFindVolunteersPath,
   vmModelPath,
   vmObjectPath,
   vmObjectsPath,
   vmPath,
   vmProcessesPath,
-  vmRecordsPath,
   vmScenariosPath,
 } from '../../data/navigation'
 import { areas, getObject, objectsByArea } from '../../data/npc-vm'
@@ -21,16 +18,6 @@ const LEARN = [
   { to: vmObjectsPath, label: 'Object Explorer', end: true },
 ]
 
-// Record pages (list, detail, edit) highlight their list entry: NavLink matches by path prefix.
-const WORK = [
-  { to: vmDashboardPath, label: 'Dashboard' },
-  { to: vmFindVolunteersPath, label: 'Find Volunteers' },
-  { to: vmRecordsPath('Account', 'AccountType:Person Account'), match: '/vm/objects/Account/records', label: 'Volunteers' },
-  { to: vmRecordsPath('VolunteerInitiative'), label: 'Initiatives' },
-  { to: vmRecordsPath('JobPosition'), label: 'Job Positions' },
-  { to: vmRecordsPath('JobPositionShift'), label: 'Shifts' },
-  { to: vmRecordsPath('JobPositionAssignment'), label: 'Assignments' },
-]
 
 const linkClass = (base) => ({ isActive }) => `${base}${isActive ? ' is-current' : ''}`
 
@@ -73,7 +60,6 @@ export default function VmSidebar() {
   return (
     <>
       {group('Learn', LEARN)}
-      {group('Work with records', WORK)}
 
       <div className="sidebar-section-label vm-sidebar-areas">Objects by area</div>
       <ul className="sidebar-list">

@@ -3392,3 +3392,144 @@ a.catalog-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md)
 .course-switcher-sidebar .course-switcher-hint { margin-top: 3px; font-size: 12px; }
 .course-switcher-sidebar .course-switcher-caret { margin-top: 4px; }
 .course-switcher-sidebar .course-icon { margin-top: 2px; }
+
+/* ==========================================================================
+   Lab app bar — Salesforce-style object tabs, More and New
+   ========================================================================== */
+
+.vm-appbar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 20;
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  margin: -40px -48px 28px;
+  padding: 0 48px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.vm-appbar-app {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 14px;
+  margin-right: 4px;
+  border-right: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.vm-appbar-grid { color: var(--accent); font-size: 12px; letter-spacing: -2px; }
+
+.vm-appbar-tabs {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.vm-appbar-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--text-soft);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.vm-appbar-tab:hover { color: var(--accent); background: var(--surface-soft); }
+.vm-appbar-tab.is-active { border-bottom-color: var(--accent); color: var(--accent); }
+.vm-appbar-tab.is-temp { font-style: italic; }
+
+.vm-appbar-menu { position: relative; display: flex; }
+.vm-appbar-menu-button[aria-expanded='true'] { background: var(--surface-soft); color: var(--accent); }
+.vm-appbar-new { margin-left: auto; }
+
+.vm-appbar-new .vm-appbar-menu-button {
+  align-self: center;
+  height: 32px;
+  margin-left: 6px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.vm-appbar-new .vm-appbar-menu-button:hover,
+.vm-appbar-new .vm-appbar-menu-button[aria-expanded='true'] { background: var(--accent-hover); color: var(--on-accent); }
+
+.vm-appbar-dropdown {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 2px);
+  padding: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+
+.vm-appbar-dropdown.is-left { left: 0; }
+.vm-appbar-dropdown.is-right { right: 0; }
+
+.vm-appbar-more {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(170px, 1fr));
+  gap: 10px 16px;
+  width: min(640px, calc(100vw - 32px));
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.vm-appbar-more-group { display: flex; flex-direction: column; gap: 1px; }
+.vm-appbar-more-title { margin-bottom: 4px; color: var(--vm-area-color); font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.vm-appbar-more a, .vm-appbar-new-list a { display: block; padding: 5px 8px; border-radius: 4px; color: var(--text); font-size: 13.5px; }
+.vm-appbar-more a:hover, .vm-appbar-new-list a:hover, .vm-appbar-more a.is-current { background: var(--accent-soft); color: var(--accent); }
+.vm-appbar-new-list { display: flex; flex-direction: column; width: 260px; }
+.vm-appbar-new-hint { margin-top: 6px; padding: 6px 8px 2px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px; }
+
+@media (max-width: 1100px) {
+  .vm-appbar { margin: -32px -32px 24px; padding: 0 32px; }
+}
+
+@media (max-width: 860px) {
+  .vm-appbar { margin: -28px -20px 20px; padding: 0 12px; }
+  .vm-appbar-app { display: none; }
+  .vm-appbar-more { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 860px) {
+  /* Menus open as a full-width panel under the app bar on small screens. */
+  .vm-appbar-dropdown,
+  .vm-appbar-dropdown.is-left,
+  .vm-appbar-dropdown.is-right { position: fixed; top: calc(var(--header-h) + 48px); left: 12px; right: 12px; }
+  .vm-appbar-more, .vm-appbar-new-list { width: auto; max-height: calc(100vh - var(--header-h) - 80px); overflow-y: auto; }
+}
+
+.vm-appbar-tab { padding: 0 10px; }
+
+@media (max-width: 1799px) {
+  .vm-appbar-app { display: none; }
+}
+
+/* "Lab home" is always in the sidebar, so the Home tab can go first when space is short. */
+@media (min-width: 861px) and (max-width: 1359px) {
+  .vm-appbar-home { display: none; }
+}

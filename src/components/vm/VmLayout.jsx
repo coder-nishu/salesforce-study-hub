@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { useVmStore } from '../../lib/vm/storeContext'
+import VmAppBar from './VmAppBar'
 import VmStoreProvider from './VmStoreContext'
 
 function LoadIssues() {
@@ -27,11 +28,13 @@ function LoadIssues() {
   )
 }
 
-// Shell for every /vm route: the record store and the page. Navigation lives in the sidebar.
+// Shell for every /vm route: the record store, the Salesforce-style app bar (records),
+// and the page. Learning pages and objects by area live in the sidebar.
 export default function VmLayout() {
   return (
     <VmStoreProvider>
       <div className="vm-shell">
+        <VmAppBar />
         <LoadIssues />
         <Outlet />
       </div>
