@@ -15,10 +15,19 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import SubtopicPage from './pages/SubtopicPage'
 import TopicPage from './pages/TopicPage'
+import VmLayout from './components/vm/VmLayout'
+import VmDashboard from './pages/vm/VmDashboard'
+import VmFindVolunteers from './pages/vm/VmFindVolunteers'
 import VmHome from './pages/vm/VmHome'
 import VmModel from './pages/vm/VmModel'
 import VmObjectDetails from './pages/vm/VmObjectDetails'
 import VmObjectExplorer from './pages/vm/VmObjectExplorer'
+import VmProcesses from './pages/vm/VmProcesses'
+import VmRecordDetail from './pages/vm/VmRecordDetail'
+import VmRecordEdit from './pages/vm/VmRecordEdit'
+import VmRecordList from './pages/vm/VmRecordList'
+import VmScenarios from './pages/vm/VmScenarios'
+import VmUseCase from './pages/vm/VmUseCase'
 
 function CourseRoute() {
   const course = getCourse(useParams().courseSlug)
@@ -76,10 +85,22 @@ export default function App() {
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           {/* NPC Volunteer Management Lab — static "vm" segments outrank :courseSlug */}
-          <Route path="vm" element={<VmHome />} />
-          <Route path="vm/objects" element={<VmObjectExplorer />} />
-          <Route path="vm/objects/:apiName" element={<VmObjectDetails />} />
-          <Route path="vm/model" element={<VmModel />} />
+          <Route path="vm" element={<VmLayout />}>
+            <Route index element={<VmHome />} />
+            <Route path="dashboard" element={<VmDashboard />} />
+            <Route path="objects" element={<VmObjectExplorer />} />
+            <Route path="objects/:apiName" element={<VmObjectDetails />} />
+            <Route path="objects/:apiName/records" element={<VmRecordList />} />
+            <Route path="objects/:apiName/records/new" element={<VmRecordEdit />} />
+            <Route path="objects/:apiName/records/:recordId" element={<VmRecordDetail />} />
+            <Route path="objects/:apiName/records/:recordId/edit" element={<VmRecordEdit />} />
+            <Route path="find-volunteers" element={<VmFindVolunteers />} />
+            <Route path="model" element={<VmModel />} />
+            <Route path="processes" element={<VmProcesses />} />
+            <Route path="scenarios" element={<VmScenarios />} />
+            <Route path="use-cases/:useCaseId" element={<VmUseCase />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
           <Route path=":courseSlug" element={<CourseRoute />} />
           <Route path=":courseSlug/:sectionSlug" element={<SectionRoute />} />
           <Route

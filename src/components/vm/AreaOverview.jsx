@@ -4,7 +4,7 @@ import { areas, getObject, labelFor, objectsByArea } from '../../data/npc-vm'
 
 // All five ERD areas as panels. The selected object's parents, children and
 // standard links are highlighted — including those in other areas.
-export default function AreaOverview({ selected }) {
+export default function AreaOverview({ selected, hrefFor = vmModelPath }) {
   const object = getObject(selected)
   const parents = new Set(object.parents.map((r) => r.parent))
   const children = new Set(object.children.map((r) => r.child))
@@ -33,7 +33,7 @@ export default function AreaOverview({ selected }) {
             {crossArea.map((api, i) => (
               <span key={api}>
                 {i > 0 && ', '}
-                <Link to={vmModelPath(api)}>{labelFor(api)}</Link>
+                <Link to={hrefFor(api)}>{labelFor(api)}</Link>
               </span>
             ))}
             .
@@ -53,7 +53,7 @@ export default function AreaOverview({ selected }) {
                 return (
                   <li key={obj.apiName}>
                     <Link
-                      to={vmModelPath(obj.apiName)}
+                      to={hrefFor(obj.apiName)}
                       className={`ao-item is-${role}`}
                       aria-current={role === 'selected' ? 'true' : undefined}
                     >

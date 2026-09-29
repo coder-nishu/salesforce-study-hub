@@ -4,17 +4,20 @@ import Breadcrumbs from '../../components/Breadcrumbs'
 import { ApiNameBadge, ObjectKindBadge } from '../../components/vm/VmBadges'
 import { vmObjectPath, vmPath } from '../../data/navigation'
 import { areas, areasById, objectsByArea, totals } from '../../data/npc-vm'
+import { recordsOf } from '../../lib/vm/records'
+import { useVmStore } from '../../lib/vm/storeContext'
 
 const KINDS = [
   { id: 'all', label: 'All' },
   { id: 'standard', label: 'Standard' },
-  { id: 'license', label: 'License' },
+  { id: 'license', label: 'License / custom' },
 ]
 
 export default function VmObjectExplorer() {
   // The area filter lives in the URL so area links (sidebar, lab home) work.
   // Search text and object type are local state — they don't need to be linkable.
   const [params, setParams] = useSearchParams()
+  const { records } = useVmStore()
   const areaFilter = areasById.has(params.get('area')) ? params.get('area') : 'all'
   const [query, setQuery] = useState('')
   const [kind, setKind] = useState('all')
@@ -110,8 +113,8 @@ export default function VmObjectExplorer() {
                     <ApiNameBadge status={obj.apiNameStatus} />
                   </span>
                   <span className="vm-object-row-counts">
-                    {obj.parents.length} parent{obj.parents.length === 1 ? '' : 's'} · {obj.children.length} child
-                    {obj.children.length === 1 ? '' : 'ren'}
+                    {obj.fields.length} fields · {obj.parents.length + obj.children.length} relationships ·{' '}
+                    <strong>{recordsOf(records, obj.apiName).length} records</strong>
                   </span>
                 </Link>
               </li>

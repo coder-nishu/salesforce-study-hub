@@ -213,3 +213,37 @@ export function vmObjectPath(apiName) {
 export function vmModelPath(focus) {
   return focus ? `/vm/model?focus=${encodeURIComponent(focus)}` : '/vm/model'
 }
+
+export const vmDashboardPath = '/vm/dashboard'
+export const vmFindVolunteersPath = '/vm/find-volunteers'
+export const vmProcessesPath = '/vm/processes'
+export const vmScenariosPath = '/vm/scenarios'
+
+export function vmRecordsPath(apiName, filter) {
+  const base = `/vm/objects/${apiName}/records`
+  return filter ? `${base}?filter=${encodeURIComponent(filter)}` : base
+}
+
+export function vmRecordPath(apiName, recordId) {
+  return `/vm/objects/${apiName}/records/${recordId}`
+}
+
+// prefill: { FieldApiName: value } — pre-sets fields, e.g. the parent from a related list.
+export function vmNewRecordPath(apiName, prefill) {
+  const base = `/vm/objects/${apiName}/records/new`
+  if (!prefill || !Object.keys(prefill).length) return base
+  return `${base}?${new URLSearchParams(prefill).toString()}`
+}
+
+export function vmEditRecordPath(apiName, recordId) {
+  return `/vm/objects/${apiName}/records/${recordId}/edit`
+}
+
+export function vmUseCasePath(useCaseId) {
+  return `/vm/use-cases/${useCaseId}`
+}
+
+// Data Model page views: 'focus' (default), 'area', 'full', 'record'.
+export function vmModelViewPath(view, params = {}) {
+  return `/vm/model?${new URLSearchParams({ view, ...params }).toString()}`
+}

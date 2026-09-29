@@ -1,12 +1,26 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { getLab, vmModelPath, vmObjectPath, vmObjectsPath, vmPath } from '../../data/navigation'
+import {
+  getLab,
+  vmDashboardPath,
+  vmFindVolunteersPath,
+  vmModelPath,
+  vmObjectPath,
+  vmObjectsPath,
+  vmPath,
+  vmProcessesPath,
+  vmScenariosPath,
+} from '../../data/navigation'
 import { areas, getObject, objectsByArea } from '../../data/npc-vm'
 
 const LAB_PAGES = [
   { to: vmPath, label: 'Lab home', end: true },
+  { to: vmDashboardPath, label: 'Dashboard', end: true },
   { to: vmObjectsPath, label: 'Object Explorer', end: true },
-  { to: vmModelPath(), label: 'Relationship Map', end: true },
+  { to: vmFindVolunteersPath, label: 'Find Volunteers', end: true },
+  { to: vmModelPath(), label: 'Data Model', end: true },
+  { to: vmProcessesPath, label: 'Processes', end: true },
+  { to: vmScenariosPath, label: 'Scenario Lab', end: true },
 ]
 
 const linkClass = (base) => ({ isActive }) => `${base}${isActive ? ' is-current' : ''}`
@@ -15,7 +29,7 @@ export default function VmSidebar() {
   const { pathname } = useLocation()
   const lab = getLab('vm')
   const activeApiName = pathname.startsWith(`${vmObjectsPath}/`)
-    ? decodeURIComponent(pathname.slice(vmObjectsPath.length + 1))
+    ? decodeURIComponent(pathname.slice(vmObjectsPath.length + 1).split('/')[0])
     : null
   const activeArea = getObject(activeApiName)?.area ?? null
 
