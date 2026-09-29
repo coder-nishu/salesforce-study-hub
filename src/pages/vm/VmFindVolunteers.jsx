@@ -9,7 +9,7 @@ export default function VmFindVolunteers() {
   const job = params.get('job')
   return (
     <div className="page page-wide">
-      <Breadcrumbs items={[{ label: 'Volunteer Management Lab', to: vmPath }, { label: 'Find Volunteers' }]} />
+      <Breadcrumbs items={[{ label: 'NPC Volunteer Management Lab', to: vmPath }, { label: 'Find Volunteers' }]} />
       <header className="page-header">
         <h1 className="page-title">Find Volunteers</h1>
         <p className="page-subtitle">

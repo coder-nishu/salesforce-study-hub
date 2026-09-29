@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Breadcrumbs from '../../components/Breadcrumbs'
 import ContentCallout from '../../components/ContentCallout'
 import Markdown from '../../components/Markdown'
 import {
@@ -82,8 +83,9 @@ export default function VmHome() {
 
   return (
     <div className="page page-wide">
+      <Breadcrumbs items={[{ label: lab.title }]} />
       <header className="page-header">
-        <div className="page-eyebrow">Nonprofit Cloud · Interactive learning lab</div>
+        <div className="page-eyebrow">Interactive lab · Nonprofit Cloud</div>
         <h1 className="page-title">{lab.title}</h1>
         <p className="page-subtitle">
           This is an interactive learning environment for understanding the NPC Volunteer Management data model and its

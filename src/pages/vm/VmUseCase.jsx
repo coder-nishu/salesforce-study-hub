@@ -322,7 +322,7 @@ export default function VmUseCase() {
 
   return (
     <div className="page page-wide">
-      <Breadcrumbs items={[{ label: 'Volunteer Management Lab', to: vmPath }, { label: 'Scenarios', to: vmScenariosPath }, { label: useCase.title }]} />
+      <Breadcrumbs items={[{ label: 'NPC Volunteer Management Lab', to: vmPath }, { label: 'Scenarios', to: vmScenariosPath }, { label: useCase.title }]} />
       <header className="page-header">
         <div className="page-eyebrow">Scenario {useCase.number}{useCase.label ? ` · ${useCase.label}` : ''}</div>
         <h1 className="page-title">{useCase.title}</h1>

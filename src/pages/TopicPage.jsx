@@ -1,4 +1,4 @@
-import { coursePath, subtopicPath } from '../data/navigation'
+import { coursePath, subtopicPath, topicPath } from '../data/navigation'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ComingSoon from '../components/ComingSoon'
 import TopicCard from '../components/TopicCard'
@@ -34,7 +34,11 @@ export default function TopicPage({ course, topic }) {
           </div>
         </section>
       ) : (
-        <ComingSoon title={topic.title} />
+        <ComingSoon
+          title={topic.title}
+          linksLabel="Other domains"
+          links={course.topics.filter((t) => t.slug !== topic.slug && t.subtopics.length).map((t) => ({ label: t.title, to: topicPath(course.slug, t.slug) }))}
+        />
       )}
     </div>
   )

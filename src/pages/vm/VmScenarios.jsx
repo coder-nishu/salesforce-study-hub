@@ -7,7 +7,7 @@ import { useCases } from '../../data/npc-vm/useCases'
 export default function VmScenarios() {
   return (
     <div className="page page-wide">
-      <Breadcrumbs items={[{ label: 'Volunteer Management Lab', to: vmPath }, { label: 'Scenarios' }]} />
+      <Breadcrumbs items={[{ label: 'NPC Volunteer Management Lab', to: vmPath }, { label: 'Scenarios' }]} />
       <header className="page-header">
         <h1 className="page-title">Scenario Lab</h1>
         <p className="page-subtitle">

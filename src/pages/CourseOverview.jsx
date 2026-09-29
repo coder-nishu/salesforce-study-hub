@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
+import Breadcrumbs from '../components/Breadcrumbs'
 import TopicCard from '../components/TopicCard'
-import { topicPath } from '../data/navigation'
+import { catalog, topicPath } from '../data/navigation'
 
 const COURSE_FEATURES = [
   { label: 'Certification Preparation' },
@@ -14,10 +15,15 @@ export default function CourseOverview({ course }) {
 
   return (
     <div className="page">
+      <Breadcrumbs items={[{ label: course.title }]} />
       <header className="page-header">
-        <div className="page-eyebrow">Course</div>
+        <div className="page-eyebrow">Certification course</div>
         <h1 className="page-title">{course.title}</h1>
         <p className="page-subtitle">{course.description}</p>
+        <p className="course-part-of">
+          Part of Salesforce Study Hub · {catalog.length} courses and labs ·{' '}
+          <Link to="/">Browse the others →</Link>
+        </p>
       </header>
 
       <ul className="feature-list">

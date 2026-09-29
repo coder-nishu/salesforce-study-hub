@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import {
-  getLab,
   vmDashboardPath,
   vmFindVolunteersPath,
   vmModelPath,
@@ -9,25 +8,34 @@ import {
   vmObjectsPath,
   vmPath,
   vmProcessesPath,
+  vmRecordsPath,
   vmScenariosPath,
 } from '../../data/navigation'
 import { areas, getObject, objectsByArea } from '../../data/npc-vm'
 
-const LAB_PAGES = [
+const LEARN = [
   { to: vmPath, label: 'Lab home', end: true },
-  { to: vmDashboardPath, label: 'Dashboard', end: true },
+  { to: vmScenariosPath, label: 'Scenario Lab', match: '/vm/use-cases' },
+  { to: vmProcessesPath, label: 'Processes' },
+  { to: vmModelPath(), label: 'Data Model' },
   { to: vmObjectsPath, label: 'Object Explorer', end: true },
-  { to: vmFindVolunteersPath, label: 'Find Volunteers', end: true },
-  { to: vmModelPath(), label: 'Data Model', end: true },
-  { to: vmProcessesPath, label: 'Processes', end: true },
-  { to: vmScenariosPath, label: 'Scenario Lab', end: true },
+]
+
+// Record pages (list, detail, edit) highlight their list entry: NavLink matches by path prefix.
+const WORK = [
+  { to: vmDashboardPath, label: 'Dashboard' },
+  { to: vmFindVolunteersPath, label: 'Find Volunteers' },
+  { to: vmRecordsPath('Account', 'AccountType:Person Account'), match: '/vm/objects/Account/records', label: 'Volunteers' },
+  { to: vmRecordsPath('VolunteerInitiative'), label: 'Initiatives' },
+  { to: vmRecordsPath('JobPosition'), label: 'Job Positions' },
+  { to: vmRecordsPath('JobPositionShift'), label: 'Shifts' },
+  { to: vmRecordsPath('JobPositionAssignment'), label: 'Assignments' },
 ]
 
 const linkClass = (base) => ({ isActive }) => `${base}${isActive ? ' is-current' : ''}`
 
 export default function VmSidebar() {
   const { pathname } = useLocation()
-  const lab = getLab('vm')
   const activeApiName = pathname.startsWith(`${vmObjectsPath}/`)
     ? decodeURIComponent(pathname.slice(vmObjectsPath.length + 1).split('/')[0])
     : null
@@ -42,25 +50,30 @@ export default function VmSidebar() {
   }
   const toggle = (id) => setOpenAreas((prev) => ({ ...prev, [id]: !prev[id] }))
 
-  return (
-    <nav className="sidebar-inner">
-      <div className="sidebar-section-label">Course</div>
-      <NavLink to={vmPath} end className={linkClass('sidebar-course')}>
-        {lab.title}
-      </NavLink>
+  const isActive = (item) =>
+    item.match ? pathname.startsWith(item.match) : item.end ? pathname === item.to : pathname.startsWith(item.to.split('?')[0])
 
-      <div className="sidebar-section-label">Lab</div>
+  const group = (label, items) => (
+    <>
+      <div className="sidebar-section-label">{label}</div>
       <ul className="sidebar-list">
-        {LAB_PAGES.map((page) => (
-          <li key={page.to} className="sidebar-topic">
+        {items.map((item) => (
+          <li key={item.label} className="sidebar-topic">
             <div className="sidebar-topic-row">
-              <NavLink to={page.to} end={page.end} className={linkClass('sidebar-topic-link')}>
-                {page.label}
-              </NavLink>
+              <Link to={item.to} className={`sidebar-topic-link${isActive(item) ? ' is-current' : ''}`} aria-current={isActive(item) ? 'page' : undefined}>
+                {item.label}
+              </Link>
             </div>
           </li>
         ))}
       </ul>
+    </>
+  )
+
+  return (
+    <>
+      {group('Learn', LEARN)}
+      {group('Work with records', WORK)}
 
       <div className="sidebar-section-label vm-sidebar-areas">Objects by area</div>
       <ul className="sidebar-list">
@@ -102,6 +115,6 @@ export default function VmSidebar() {
           )
         })}
       </ul>
-    </nav>
+    </>
   )
 }

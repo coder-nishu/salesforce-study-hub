@@ -247,3 +247,39 @@ export function vmUseCasePath(useCaseId) {
 export function vmModelViewPath(view, params = {}) {
   return `/vm/model?${new URLSearchParams({ view, ...params }).toString()}`
 }
+
+// ---------- Course catalog ----------
+// Every course and lab on the site, in display order. The header switcher, the sidebar,
+// the home page and "Jump to" all read this list — add a future course here.
+
+export const catalog = [
+  {
+    slug: 'salesforce-admin',
+    kind: 'course',
+    kindLabel: 'Certification course',
+    title: 'Salesforce Administrator',
+    tagline: 'Structured notes, scenarios, exam shortcuts and revision for the Admin certification.',
+    path: '/salesforce-admin',
+    stats: ['10 domains', '60 questions · 65 minutes'],
+  },
+  {
+    slug: 'vm',
+    kind: 'lab',
+    kindLabel: 'Interactive lab',
+    title: 'NPC Volunteer Management Lab',
+    tagline: 'A small Nonprofit Cloud org you can experiment with: create volunteers, match them to shifts, see why.',
+    path: '/vm',
+    stats: ['35 objects', '12 scenarios'],
+  },
+]
+
+export const catalogPlaceholder = {
+  title: 'More courses coming',
+  text: 'New Salesforce courses and labs will appear here as they’re added.',
+}
+
+// The catalog entry the current page belongs to, or null (e.g. the home page).
+export function currentCatalogEntry(pathname) {
+  const slug = pathname.split('/').filter(Boolean)[0]
+  return catalog.find((entry) => entry.slug === slug) ?? null
+}

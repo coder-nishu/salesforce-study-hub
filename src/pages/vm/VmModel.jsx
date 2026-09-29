@@ -240,7 +240,7 @@ export default function VmModel() {
 
   return (
     <div className="page page-wide">
-      <Breadcrumbs items={[{ label: 'Volunteer Management Lab', to: vmPath }, { label: 'Data Model' }]} />
+      <Breadcrumbs items={[{ label: 'NPC Volunteer Management Lab', to: vmPath }, { label: 'Data Model' }]} />
       <header className="page-header">
         <h1 className="page-title">Data Model</h1>
         <p className="page-subtitle">Objects and relationships from your ERD — as a focus map, by area, in full, or through real records.</p>

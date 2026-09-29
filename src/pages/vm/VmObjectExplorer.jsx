@@ -47,7 +47,7 @@ export default function VmObjectExplorer() {
 
   return (
     <div className="page">
-      <Breadcrumbs items={[{ label: 'Volunteer Management Lab', to: vmPath }, { label: 'Object Explorer' }]} />
+      <Breadcrumbs items={[{ label: 'NPC Volunteer Management Lab', to: vmPath }, { label: 'Object Explorer' }]} />
       <header className="page-header">
         <h1 className="page-title">Object Explorer</h1>
         <p className="page-subtitle">All {totals.objects} objects on the Volunteer Management ERD, grouped by area.</p>

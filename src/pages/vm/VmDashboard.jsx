@@ -25,7 +25,7 @@ export default function VmDashboard() {
   const metrics = computeMetrics(records)
   return (
     <div className="page page-wide">
-      <Breadcrumbs items={[{ label: 'Volunteer Management Lab', to: vmPath }, { label: 'Dashboard' }]} />
+      <Breadcrumbs items={[{ label: 'NPC Volunteer Management Lab', to: vmPath }, { label: 'Dashboard' }]} />
       <header className="page-header">
         <h1 className="page-title">Dashboard</h1>
         <p className="page-subtitle">Every number is calculated from the records in the lab right now — each shows what it counts.</p>

@@ -252,7 +252,7 @@ export default function VmObjectDetails() {
 
   return (
     <div className="page page-wide vm-details">
-      <Breadcrumbs items={[{ label: 'Volunteer Management Lab', to: vmPath }, { label: 'Objects', to: vmObjectsPath }, { label: object.label }]} />
+      <Breadcrumbs items={[{ label: 'NPC Volunteer Management Lab', to: vmPath }, { label: 'Objects', to: vmObjectsPath }, { label: object.label }]} />
 
       <header className="page-header">
         <div className="vm-details-area"><AreaTag areaId={object.area} /></div>

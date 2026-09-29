@@ -1,31 +1,6 @@
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import {
-  vmDashboardPath,
-  vmFindVolunteersPath,
-  vmModelPath,
-  vmObjectsPath,
-  vmPath,
-  vmProcessesPath,
-  vmRecordsPath,
-  vmScenariosPath,
-} from '../../data/navigation'
+import { Outlet } from 'react-router-dom'
 import { useVmStore } from '../../lib/vm/storeContext'
 import VmStoreProvider from './VmStoreContext'
-
-const TABS = [
-  { to: vmPath, label: 'Home', end: true },
-  { to: vmDashboardPath, label: 'Dashboard' },
-  { to: vmObjectsPath, label: 'Objects', end: true },
-  { to: vmRecordsPath('Account'), label: 'Volunteers', match: '/vm/objects/Account/' },
-  { to: vmRecordsPath('VolunteerInitiative'), label: 'Initiatives', match: '/vm/objects/VolunteerInitiative/' },
-  { to: vmRecordsPath('JobPosition'), label: 'Jobs', match: '/vm/objects/JobPosition/' },
-  { to: vmRecordsPath('JobPositionShift'), label: 'Shifts', match: '/vm/objects/JobPositionShift/' },
-  { to: vmRecordsPath('JobPositionAssignment'), label: 'Assignments', match: '/vm/objects/JobPositionAssignment/' },
-  { to: vmFindVolunteersPath, label: 'Find Volunteers' },
-  { to: vmModelPath(), label: 'Data Model' },
-  { to: vmProcessesPath, label: 'Processes' },
-  { to: vmScenariosPath, label: 'Scenarios', match: ['/vm/scenarios', '/vm/use-cases'] },
-]
 
 function LoadIssues() {
   const { loadIssues, dismissLoadIssues, resetDemo } = useVmStore()
@@ -52,37 +27,11 @@ function LoadIssues() {
   )
 }
 
-function Tabs() {
-  const { pathname } = useLocation()
-  return (
-    <nav className="vm-tabs" aria-label="Volunteer Management Lab">
-      <ul>
-        {TABS.map((tab) => (
-          <li key={tab.label}>
-            <NavLink
-              to={tab.to}
-              end={tab.end}
-              className={({ isActive }) => {
-                const matches = [tab.match].flat().filter(Boolean)
-                const active = isActive || matches.some((m) => pathname.startsWith(m))
-                return `vm-tab${active ? ' is-active' : ''}`
-              }}
-            >
-              {tab.label}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  )
-}
-
-// Shell for every /vm route: the record store, the lab's tab bar, and the page.
+// Shell for every /vm route: the record store and the page. Navigation lives in the sidebar.
 export default function VmLayout() {
   return (
     <VmStoreProvider>
       <div className="vm-shell">
-        <Tabs />
         <LoadIssues />
         <Outlet />
       </div>

@@ -8,7 +8,7 @@ import { processes, supportingRoles } from '../../data/npc-vm/processes'
 export default function VmProcesses() {
   return (
     <div className="page page-wide">
-      <Breadcrumbs items={[{ label: 'Volunteer Management Lab', to: vmPath }, { label: 'Processes' }]} />
+      <Breadcrumbs items={[{ label: 'NPC Volunteer Management Lab', to: vmPath }, { label: 'Processes' }]} />
       <header className="page-header">
         <h1 className="page-title">Learning processes</h1>
         <p className="page-subtitle">

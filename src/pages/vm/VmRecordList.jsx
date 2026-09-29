@@ -28,7 +28,7 @@ export default function VmRecordList() {
     <div className="page page-wide">
       <Breadcrumbs
         items={[
-          { label: 'Volunteer Management Lab', to: vmPath },
+          { label: 'NPC Volunteer Management Lab', to: vmPath },
           { label: 'Objects', to: vmObjectsPath },
           { label: object.label, to: vmObjectPath(apiName) },
           { label: 'Records' },

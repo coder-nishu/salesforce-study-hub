@@ -36,7 +36,7 @@ export default function VmRecordEdit() {
     <div className="page">
       <Breadcrumbs
         items={[
-          { label: 'Volunteer Management Lab', to: vmPath },
+          { label: 'NPC Volunteer Management Lab', to: vmPath },
           { label: object.label, to: vmObjectPath(apiName) },
           { label: 'Records', to: vmRecordsPath(apiName) },
           isNew ? { label: 'New' } : { label: displayName(record), to: vmRecordPath(apiName, record.id) },
