@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
 import TopicCard from '../components/TopicCard'
 import { catalog, topicPath } from '../data/navigation'
+import { readySubtopics } from '../lib/content'
 
 const COURSE_FEATURES = [
   { label: 'Certification Preparation' },
@@ -62,11 +63,22 @@ export default function CourseOverview({ course }) {
               index={i + 1}
               title={topic.title}
               description={topic.description}
-              meta={
-                topic.subtopics.length
-                  ? `${topic.subtopics.length} subtopics`
-                  : 'Coming soon'
-              }
+              meta={(() => {
+                if (!topic.subtopics.length) return 'Coming soon'
+                const ready = readySubtopics(course.slug, topic).length
+                return (
+                  <>
+                    {topic.subtopics.length} subtopics
+                    {ready > 0 && (
+                      <span className="ready-meta">
+                        {' · '}
+                        <span className="ready-dot" aria-hidden="true" />
+                        {ready} with notes
+                      </span>
+                    )}
+                  </>
+                )
+              })()}
               to={topicPath(course.slug, topic.slug)}
             />
           ))}

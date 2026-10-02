@@ -32,7 +32,13 @@ export default function TopicPage({ course, topic }) {
                   key={sub.slug}
                   index={i + 1}
                   title={sub.title}
-                  meta={hasContent(course.slug, topic.slug, sub.slug) ? 'Notes ready' : 'Coming soon'}
+                  meta={
+                    hasContent(course.slug, topic.slug, sub.slug) ? (
+                      <span className="ready-meta"><span className="ready-dot" aria-hidden="true" />Notes ready</span>
+                    ) : (
+                      'Coming soon'
+                    )
+                  }
                   to={subtopicPath(course.slug, topic.slug, sub.slug)}
                 />
               ))}

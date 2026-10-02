@@ -10,6 +10,7 @@ import {
   topicPath,
 } from '../data/navigation'
 import CourseSwitcher, { CourseIcon } from './CourseSwitcher'
+import { hasContent } from '../lib/content'
 import SidebarTopic from './SidebarTopic'
 import VmSidebar from './vm/VmSidebar'
 
@@ -44,6 +45,7 @@ function CourseNav({ course, sectionSlug }) {
           <li key={page.slug} className="sidebar-topic">
             <div className="sidebar-topic-row">
               <NavLink to={topicPath(course.slug, page.slug)} end className={({ isActive }) => `sidebar-topic-link${isActive ? ' is-current' : ''}`}>
+                {hasContent(course.slug, page.slug) && <span className="ready-dot" aria-label="Notes ready" />}
                 {page.title}
               </NavLink>
             </div>
@@ -64,6 +66,11 @@ function CourseNav({ course, sectionSlug }) {
           />
         ))}
       </ul>
+      <p className="ready-legend">
+        <span><span className="ready-dot" aria-hidden="true" /> notes ready</span>
+        <span><span className="ready-count">n</span> pages with notes</span>
+        <span className="ready-legend-soon">dimmed = coming soon</span>
+      </p>
     </>
   )
 }

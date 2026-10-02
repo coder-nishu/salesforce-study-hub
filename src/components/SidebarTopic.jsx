@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom'
 import { Fragment } from 'react'
 import { groupSubtopics, subtopicPath, topicPath } from '../data/navigation'
-import { hasContent } from '../lib/content'
+import { hasContent, readySubtopics } from '../lib/content'
 
 export default function SidebarTopic({ courseSlug, topic, isOpen, isActive, onToggle }) {
   const hasSubtopics = topic.subtopics.length > 0
   const listId = `sidebar-${topic.slug}`
+  const readyCount = readySubtopics(courseSlug, topic).length
 
   return (
     <li className={`sidebar-topic${isActive ? ' is-active' : ''}`}>
@@ -19,6 +20,11 @@ export default function SidebarTopic({ courseSlug, topic, isOpen, isActive, onTo
         >
           {topic.title}
         </NavLink>
+        {readyCount > 0 && (
+          <span className="ready-count" title={`${readyCount} of ${topic.subtopics.length} pages have notes`}>
+            {readyCount}
+          </span>
+        )}
         {hasSubtopics && (
           <button
             type="button"
@@ -53,8 +59,9 @@ export default function SidebarTopic({ courseSlug, topic, isOpen, isActive, onTo
                       className={({ isActive: current }) =>
                         `sidebar-subtopic-link${current ? ' is-current' : ''}${ready ? '' : ' is-soon'}`
                       }
-                      title={ready ? undefined : 'Notes coming soon'}
+                      title={ready ? 'Notes ready' : 'Notes coming soon'}
                     >
+                      {ready && <span className="ready-dot" aria-label="Notes ready" />}
                       {sub.title}
                     </NavLink>
                   </li>

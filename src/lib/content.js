@@ -133,3 +133,8 @@ export function splitBlocks(markdown) {
     .map(({ lines, ...rest }) => ({ ...rest, body: lines.join('\n').trim() }))
     .filter((b) => b.kind || b.body)
 }
+
+// Subtopics of a topic that have a Markdown file (shown with a green "notes ready" dot).
+export function readySubtopics(courseSlug, topic) {
+  return topic.subtopics.filter((s) => hasContent(courseSlug, topic.slug, s.slug))
+}

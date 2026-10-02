@@ -3561,3 +3561,51 @@ a.catalog-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md)
   color: var(--text-soft);
   font-size: 15px;
 }
+
+/* "Notes ready" markers */
+.ready-dot {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 2px var(--success-soft);
+  vertical-align: 1px;
+}
+
+.ready-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--success-soft-strong);
+  color: var(--success);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.sidebar-topic-row .ready-count { margin-right: 2px; }
+.sidebar-subtopic-link { display: flex; align-items: baseline; }
+.sidebar-topic-link .ready-dot { margin-right: 8px; }
+.ready-meta { color: var(--success); font-weight: 600; }
+.ready-meta .ready-dot { margin-left: 2px; }
+
+.ready-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 18px 10px 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 11.5px;
+}
+
+.ready-legend span { display: inline-flex; align-items: center; gap: 4px; }
+.ready-legend .ready-dot { margin-right: 2px; }
+.ready-legend-soon { opacity: 0.75; }
