@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom'
-import { subtopicPath, topicPath } from '../data/navigation'
+import { Fragment } from 'react'
+import { groupSubtopics, subtopicPath, topicPath } from '../data/navigation'
+import { hasContent } from '../lib/content'
 
 export default function SidebarTopic({ courseSlug, topic, isOpen, isActive, onToggle }) {
   const hasSubtopics = topic.subtopics.length > 0
@@ -35,17 +37,30 @@ export default function SidebarTopic({ courseSlug, topic, isOpen, isActive, onTo
 
       {hasSubtopics && isOpen && (
         <ul id={listId} className="sidebar-subtopics">
-          {topic.subtopics.map((sub) => (
-            <li key={sub.slug}>
-              <NavLink
-                to={subtopicPath(courseSlug, topic.slug, sub.slug)}
-                className={({ isActive: current }) =>
-                  `sidebar-subtopic-link${current ? ' is-current' : ''}`
-                }
-              >
-                {sub.title}
-              </NavLink>
-            </li>
+          {groupSubtopics(topic).map((group) => (
+            <Fragment key={group.module?.id ?? 'topics'}>
+              {topic.modules?.length > 0 && (
+                <li className="sidebar-module-label" title={group.module?.description}>
+                  {group.module ? group.module.title : 'Topics'}
+                </li>
+              )}
+              {group.subtopics.map((sub) => {
+                const ready = hasContent(courseSlug, topic.slug, sub.slug)
+                return (
+                  <li key={sub.slug}>
+                    <NavLink
+                      to={subtopicPath(courseSlug, topic.slug, sub.slug)}
+                      className={({ isActive: current }) =>
+                        `sidebar-subtopic-link${current ? ' is-current' : ''}${ready ? '' : ' is-soon'}`
+                      }
+                      title={ready ? undefined : 'Notes coming soon'}
+                    >
+                      {sub.title}
+                    </NavLink>
+                  </li>
+                )
+              })}
+            </Fragment>
           ))}
         </ul>
       )}

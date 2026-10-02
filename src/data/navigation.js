@@ -17,11 +17,28 @@ export const courses = [
         title: 'Configuration & Setup',
         description:
           'Manage organization settings, users, licenses, and configuration.',
+        // A domain can group its subtopics into modules (the course material's own units).
+        // Subtopics without a `module` are listed first, under "Topics".
+        modules: [
+          {
+            id: 'setup-iii',
+            title: 'Module 3 — Users, Permissions & Security',
+            description: 'Users and licenses, profiles and permission sets, login security, and record & field access as one connected model.',
+          },
+        ],
         subtopics: [
           { slug: 'company-settings', title: 'Company Settings' },
-          { slug: 'users-and-licenses', title: 'Users & Licenses' },
           { slug: 'business-hours', title: 'Business Hours' },
           { slug: 'fiscal-year', title: 'Fiscal Year' },
+          { slug: 'setup-iii-overview', title: 'Module 3 Overview: The Security Model', module: 'setup-iii' },
+          { slug: 'users-and-licenses', title: 'Users & Licenses', module: 'setup-iii' },
+          { slug: 'user-maintenance', title: 'User Maintenance', module: 'setup-iii' },
+          { slug: 'profiles-and-object-permissions', title: 'Profiles & Object Permissions', module: 'setup-iii' },
+          { slug: 'permission-sets-and-groups', title: 'Permission Sets, Groups & Muting', module: 'setup-iii' },
+          { slug: 'organization-security', title: 'Organization Security Controls', module: 'setup-iii' },
+          { slug: 'record-and-field-access', title: 'Record & Field Access', module: 'setup-iii' },
+          { slug: 'setup-iii-scenarios', title: 'Scenarios & Troubleshooting', module: 'setup-iii' },
+          { slug: 'setup-iii-revision', title: 'Revision & Exam Keywords', module: 'setup-iii' },
         ],
       },
       {
@@ -43,11 +60,12 @@ export const courses = [
           'Learn profiles, permission sets, roles, sharing, and access control.',
         summary: 'Understand how Salesforce controls access to data.',
         subtopics: [
-          { slug: 'profiles', title: 'Profiles' },
-          { slug: 'permission-sets', title: 'Permission Sets' },
-          { slug: 'role-hierarchy', title: 'Role Hierarchy' },
-          { slug: 'organization-wide-defaults', title: 'Organization-Wide Defaults' },
-          { slug: 'sharing-rules', title: 'Sharing Rules' },
+          // seeAlso: where this topic is already covered in another domain's module.
+          { slug: 'profiles', title: 'Profiles', seeAlso: [{ label: 'Profiles & Object Permissions (Configuration & Setup III)', path: '/salesforce-admin/configuration-setup/profiles-and-object-permissions' }] },
+          { slug: 'permission-sets', title: 'Permission Sets', seeAlso: [{ label: 'Permission Sets, Groups & Muting (Configuration & Setup III)', path: '/salesforce-admin/configuration-setup/permission-sets-and-groups' }] },
+          { slug: 'role-hierarchy', title: 'Role Hierarchy', seeAlso: [{ label: 'Record & Field Access (Configuration & Setup III)', path: '/salesforce-admin/configuration-setup/record-and-field-access' }] },
+          { slug: 'organization-wide-defaults', title: 'Organization-Wide Defaults', seeAlso: [{ label: 'Record & Field Access (Configuration & Setup III)', path: '/salesforce-admin/configuration-setup/record-and-field-access' }] },
+          { slug: 'sharing-rules', title: 'Sharing Rules', seeAlso: [{ label: 'Record & Field Access (Configuration & Setup III)', path: '/salesforce-admin/configuration-setup/record-and-field-access' }] },
         ],
       },
       {
@@ -128,6 +146,16 @@ export function getCoursePage(course, pageSlug) {
 
 export function getTopic(course, topicSlug) {
   return course?.topics.find((t) => t.slug === topicSlug)
+}
+
+// Subtopics grouped by module, in display order: ungrouped topics first, then each module.
+// Returns [{ module: { id, title, description } | null, subtopics: [...] }] (empty groups dropped).
+export function groupSubtopics(topic) {
+  const groups = [{ module: null, subtopics: topic.subtopics.filter((s) => !s.module) }]
+  for (const module of topic.modules ?? []) {
+    groups.push({ module, subtopics: topic.subtopics.filter((s) => s.module === module.id) })
+  }
+  return groups.filter((g) => g.subtopics.length)
 }
 
 export function getSubtopic(topic, subtopicSlug) {

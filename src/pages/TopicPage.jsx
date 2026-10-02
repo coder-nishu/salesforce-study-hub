@@ -1,4 +1,5 @@
-import { coursePath, subtopicPath, topicPath } from '../data/navigation'
+import { coursePath, groupSubtopics, subtopicPath, topicPath } from '../data/navigation'
+import { hasContent } from '../lib/content'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ComingSoon from '../components/ComingSoon'
 import TopicCard from '../components/TopicCard'
@@ -18,21 +19,26 @@ export default function TopicPage({ course, topic }) {
       </header>
 
       {topic.subtopics.length > 0 ? (
-        <section>
-          <h2 className="section-label">
-            Subtopics <span className="section-count">{topic.subtopics.length}</span>
-          </h2>
-          <div className="card-grid">
-            {topic.subtopics.map((sub, i) => (
-              <TopicCard
-                key={sub.slug}
-                index={i + 1}
-                title={sub.title}
-                to={subtopicPath(course.slug, topic.slug, sub.slug)}
-              />
-            ))}
-          </div>
-        </section>
+        groupSubtopics(topic).map((group) => (
+          <section key={group.module?.id ?? 'topics'} className="topic-module">
+            <h2 className="section-label">
+              {group.module ? group.module.title : topic.modules?.length ? 'Topics' : 'Subtopics'}{' '}
+              <span className="section-count">{group.subtopics.length}</span>
+            </h2>
+            {group.module?.description && <p className="topic-module-desc">{group.module.description}</p>}
+            <div className="card-grid">
+              {group.subtopics.map((sub, i) => (
+                <TopicCard
+                  key={sub.slug}
+                  index={i + 1}
+                  title={sub.title}
+                  meta={hasContent(course.slug, topic.slug, sub.slug) ? 'Notes ready' : 'Coming soon'}
+                  to={subtopicPath(course.slug, topic.slug, sub.slug)}
+                />
+              ))}
+            </div>
+          </section>
+        ))
       ) : (
         <ComingSoon
           title={topic.title}

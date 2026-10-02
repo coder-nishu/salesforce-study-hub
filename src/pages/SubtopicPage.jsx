@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import ComingSoon from '../components/ComingSoon'
 import ContentPage from '../components/ContentPage'
 import { coursePath, subtopicPath, topicPath } from '../data/navigation'
@@ -22,6 +24,17 @@ export default function SubtopicPage({ course, topic, subtopic }) {
       tags={meta.tags}
       content={page?.content}
     >
+      {subtopic.seeAlso?.length > 0 && (
+        <div className="see-also">
+          <strong>Already covered:</strong> this topic is taught in{' '}
+          {subtopic.seeAlso.map((s, i) => (
+            <Fragment key={s.path}>
+              {i > 0 && ', '}
+              <Link to={s.path}>{s.label} →</Link>
+            </Fragment>
+          ))}
+        </div>
+      )}
       <ComingSoon
         title={subtopic.title}
         linksLabel={`Other ${topic.title} topics`}

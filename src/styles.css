@@ -3533,3 +3533,31 @@ a.catalog-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md)
 @media (min-width: 861px) and (max-width: 1359px) {
   .vm-appbar-home { display: none; }
 }
+
+/* Modules inside a domain */
+.sidebar-module-label {
+  margin: 10px 0 2px -9px;
+  padding: 0 10px;
+  color: var(--text-muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.sidebar-subtopics .sidebar-module-label:first-child { margin-top: 4px; }
+.sidebar-subtopic-link.is-soon { opacity: 0.7; }
+.topic-module { margin-bottom: 28px; }
+.topic-module-desc { margin: -4px 0 12px; color: var(--text-muted); font-size: 14px; }
+
+.see-also {
+  margin: 24px 0 0;
+  padding: 12px 16px;
+  border: 1px solid var(--accent-border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--text-soft);
+  font-size: 15px;
+}
